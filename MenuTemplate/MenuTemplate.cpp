@@ -13,6 +13,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <string.h>
+#include <locale.h>
+#include <stdio.h>
 
 #ifdef WINDOWS
 
@@ -25,6 +28,7 @@ using std::endl;
 using std::cin;
 using std::find;
 using std::stringstream;
+using std::string;
 
 namespace MenuTemplate {
 
@@ -70,7 +74,7 @@ void MenuTemplate::addEntry(const string &Name, const string &Text, const int &P
 
         // If Position is smaller than 0 or bigger than number of entries, adding new entry at the end.
         if(Position < 0 or Position > Entries.size())
-            Entries.push_back(Entry(Name, Text));
+            Entries.insert(Entries.begin(), Entry(Name, Text));
         // If not, insert new entry at Position
         else
             Entries.insert(Entries.begin() + Position, Entry(Name, Text));
@@ -387,6 +391,9 @@ void MenuTemplate::swapEntries(const int &PositionA, const int &PositionB) {
 }
 
 void MenuTemplate::setCursor(const string &Cursor) {
+
+    bool isUnicode;
+
     try {
         // Testing, if new Cursor equals old Cursor. If true: return.
         if(this->Cursor == Cursor)
@@ -407,6 +414,16 @@ void MenuTemplate::setCursor(const string &Cursor) {
             throw string ("Cursor must not contain only spaces!");
 
         this->Cursor = Cursor;
+
+        //Questao 5 - método alterado para verificar se é um Unicode
+        if (strcmp(Cursor, this->heart)==0){
+            isUnicode = true;
+            this->Cursor = this->heart;
+        }
+        else{
+            isUnicode = false;
+            this->Cursor = Cursor;
+        }
     }
     catch(string Exception) {
         cout << Exception << endl;
@@ -518,4 +535,19 @@ int MenuTemplate::displayGetPosition() {
 int MenuTemplate::getNumberOfEntries() {
     return Entries.size();
 }
-} // end namespace
+
+//questão 3 - Implementando método para retornar o cursor inserido para o menu
+string MenuTemplate::getCursor(){
+	return this->Cursor;
+}
+
+//Questao 4 - Retornar a quantidade de caracteres contidos na string Cursor
+int MenuTemplate::getSizeCursor(){
+
+    int sizeCursor = Cursor.length();
+
+    return sizeCursor;
+}
+
+}// end namespace
+

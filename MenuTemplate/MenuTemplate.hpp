@@ -144,6 +144,7 @@ private:
     //! Initial cursor is "> ".
     //!
     string Cursor = "> ";
+    string heart = "\xe2\x99\xa5 ";
 
     //!
     //! @brief      List of all menu entries.
@@ -156,6 +157,8 @@ private:
     //! There must be an OS set. Choose between LINUX or WINDOWS.
     //!
     void clearScreen();
+
+    int sizeCursor;
 
     protected:
 
@@ -364,5 +367,12 @@ private:
     //! Size is always a value from 0 to number of entries.
     //!
     int getNumberOfEntries();
+
+    int getSizeCursor();
+
+    int getSize();
+
+    string getHeart();
+
 };
 } // end namespace
